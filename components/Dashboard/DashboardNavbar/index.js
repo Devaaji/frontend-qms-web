@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Box,
+  Center,
   Flex,
   HStack,
   IconButton,
@@ -14,6 +15,7 @@ import { FiMenu } from 'react-icons/fi';
 import { useDashboard } from '../../../context/dashboard/DashboardProvider';
 import { HiMoon, HiSun } from 'react-icons/hi';
 import DashboardUserNavbar from '../DashboardUserNavbar';
+import LogoQMS from '../../core/LogoQMS';
 
 const DashboardNavbar = () => {
   const { isDesktopSidebarOpened, onSidebarToggle } = useDashboard();
@@ -45,6 +47,9 @@ const DashboardNavbar = () => {
               aria-label="Menu"
             />
           </Flex>
+          <Center px="5">
+            <LogoQMS multiplySize={0.6} />
+          </Center>
           <Spacer />
           <Box display={{ base: 'block', md: 'block', xl: 'none' }}>
             <Text>Logo</Text>
@@ -57,7 +62,9 @@ const DashboardNavbar = () => {
                 fontSize="xl"
                 rounded="full"
                 color="gray"
-                icon={colorMode === 'light' ? <HiSun /> : <HiMoon color='yellow' />}
+                icon={
+                  colorMode === 'light' ? <HiSun /> : <HiMoon color="yellow" />
+                }
                 aria-label="Notifications"
               />
             </Box>

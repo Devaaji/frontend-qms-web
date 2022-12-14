@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react';
 
 import {
   Box,
@@ -14,20 +14,48 @@ import {
   Stack,
   Text,
   useDisclosure,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
-import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
+import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
+import useAuthUserStore from '../store/useAuthUserStore';
+import { useRouter } from 'next/router';
+import { getServerSidePropsWithNoAuth } from '../utils/getServerSidePropsWithNoAuth';
+import axios from 'axios';
 
 const LoginPage = () => {
+  const router = useRouter();
   const { isOpen: isPasswordOpen, onToggle: onPasswordToggle } =
     useDisclosure();
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const setLogin = useAuthUserStore((state) => state.setLogin);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('http://localhost:3030/auth/login', {
+        username,
+        password,
+      });
+      const { data } = response;
+      const { accessToken, refreshToken } = data;
+      setLogin(accessToken, refreshToken);
+      router.push('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <React.Fragment>
       <Flex h="100vh" w="100vw">
         <Box
           flex={1.1}
           bgGradient="linear-gradient(to right top, #3068da, #2f57cd)"
-          boxShadow={"0px 0px 6px 1px rgba(0, 0, 0, 0.25);"}
+          boxShadow={'0px 0px 6px 1px rgba(0, 0, 0, 0.25);'}
         >
           <Flex
             w="full"
@@ -55,11 +83,15 @@ const LoginPage = () => {
           <Flex w="full" h="full" justify="center" alignItems="center">
             <Flex alignItems="center" w="full">
               <Flex flexDir="column" alignItems="center" w="full" p="150px">
-                <Stack spacing={6} w="full">
+                <Stack spacing={6} w="full" as="form" onSubmit={handleLogin}>
                   <Box>Login Page</Box>
                   <FormControl id="username">
                     <FormLabel>Username</FormLabel>
-                    <Input type="text" placeholder="Username" />
+                    <Input
+                      type="text"
+                      placeholder="Username"
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
                   </FormControl>
                   <FormControl id="password">
                     <Box>
@@ -68,16 +100,17 @@ const LoginPage = () => {
                     <InputGroup>
                       <Input
                         placeholder="Password"
-                        type={isPasswordOpen ? "text" : "password"}
+                        type={isPasswordOpen ? 'text' : 'password'}
+                        onChange={(e) => setPassword(e.target.value)}
                       />
                       <InputRightElement>
                         <IconButton
                           bg="transparent"
-                          _hover={{ bg: "transparent" }}
+                          _hover={{ bg: 'transparent' }}
                           variant="ghost"
                           color="ims-linebox"
                           aria-label={
-                            isPasswordOpen ? "Mask password" : "Reveal password"
+                            isPasswordOpen ? 'Mask password' : 'Reveal password'
                           }
                           icon={
                             isPasswordOpen ? (
@@ -93,11 +126,12 @@ const LoginPage = () => {
                   </FormControl>
                   <Button
                     color="white"
+                    type="submit"
                     bgGradient="linear-gradient(to right top, #3068da, #2f57cd)"
                     _hover={{
                       bgGradient:
-                        "linear-gradient(to right top, #3068da, #2f57cd)",
-                      transform: "scale(1.01)",
+                        'linear-gradient(to right top, #3068da, #2f57cd)',
+                      transform: 'scale(1.01)',
                     }}
                   >
                     Login
@@ -111,5 +145,8 @@ const LoginPage = () => {
     </React.Fragment>
   );
 };
+
+export const getServerSideProps = async (context) =>
+  getServerSidePropsWithNoAuth(context);
 
 export default LoginPage;

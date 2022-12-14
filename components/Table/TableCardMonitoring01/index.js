@@ -1,35 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Button,
   Center,
   Flex,
   GridItem,
-  HStack,
   Radio,
   RadioGroup,
-  SimpleGrid,
-  Stack,
   Text,
   useColorModeValue,
   useDisclosure,
-} from "@chakra-ui/react";
-import ModalAgreement from "../../../utils/modals/ModalAgreement";
+} from '@chakra-ui/react';
+import ModalAgreement from '../../../utils/modals/ModalAgreement';
 
 const TableCardMonitoring01 = ({ item, odds }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const oddsColor = odds
     ?.filter((data) => data?.uid === item.uid)
-    .map(() => useColorModeValue("#FBFBFB", "gray.700"));
+    .map(() => useColorModeValue('#FBFBFB', 'gray.700'));
 
   const [isSaveButton, setIsSaveButton] = useState(true);
 
-  const [isGoodPoint1, setIsGoodPoint1] = useState("0");
-  const [isGoodPoint2, setIsGoodPoint2] = useState("0");
-  const [isGoodPoint3, setIsGoodPoint3] = useState("0");
+  const [isGoodPoint1, setIsGoodPoint1] = useState('0');
+  const [isGoodPoint2, setIsGoodPoint2] = useState('0');
+  const [isGoodPoint3, setIsGoodPoint3] = useState('0');
 
   useEffect(() => {
-    if (isGoodPoint1 !== "0" && isGoodPoint2 !== "0" && isGoodPoint3 !== "0") {
+    if (isGoodPoint1 !== '0' && isGoodPoint2 !== '0' && isGoodPoint3 !== '0') {
       setIsSaveButton(false);
     }
   }, [isGoodPoint1, isGoodPoint2, isGoodPoint3]);
@@ -40,7 +37,7 @@ const TableCardMonitoring01 = ({ item, odds }) => {
         bg={
           oddsColor?.[0]
             ? oddsColor?.[0]
-            : useColorModeValue("#F0F7FF", "gray.600")
+            : useColorModeValue('#F0F7FF', 'gray.600')
         }
         rounded="xl"
         boxShadow="md"
@@ -72,7 +69,7 @@ const TableCardMonitoring01 = ({ item, odds }) => {
                   <Text fontSize="x-small">1</Text>
                 </GridItem>
                 <GridItem textAlign="center" w="10%" alignSelf="center">
-                  <Text fontSize="x-small">{item.p1_dimension}</Text>
+                  <Text fontSize="x-small">{item.p3_dimension}</Text>
                 </GridItem>
                 <GridItem textAlign="center" w="10%" alignSelf="center">
                   <Text fontSize="x-small">{item.p1_tolerance}</Text>
@@ -80,10 +77,10 @@ const TableCardMonitoring01 = ({ item, odds }) => {
                 <GridItem textAlign="center" w="20%" alignSelf="center">
                   <Flex>
                     <Text w="full" textAlign="center" fontSize="x-small">
-                      {item.p1_dimension_min}
+                      {item.p3_dimension_min}
                     </Text>
                     <Text w="full" textAlign="center" fontSize="x-small">
-                      {item.p1_dimension_max}
+                      {item.p3_dimension_max}
                     </Text>
                   </Flex>
                 </GridItem>
@@ -127,7 +124,7 @@ const TableCardMonitoring01 = ({ item, odds }) => {
                   <Text fontSize="x-small">2</Text>
                 </GridItem>
                 <GridItem textAlign="center" w="10%" alignSelf="center">
-                  <Text fontSize="x-small">{item.p2_dimension}</Text>
+                  <Text fontSize="x-small">{item.p3_dimension}</Text>
                 </GridItem>
                 <GridItem textAlign="center" w="10%" alignSelf="center">
                   <Text fontSize="x-small">{item.p2_tolerance}</Text>
@@ -135,10 +132,10 @@ const TableCardMonitoring01 = ({ item, odds }) => {
                 <GridItem textAlign="center" w="20%" alignSelf="center">
                   <Flex>
                     <Text w="full" textAlign="center" fontSize="x-small">
-                      {item.p2_dimension_min}
+                      {item.p3_dimension_min}
                     </Text>
                     <Text w="full" textAlign="center" fontSize="x-small">
-                      {item.p2_dimension_max}
+                      {item.p3_dimension_max}
                     </Text>
                   </Flex>
                 </GridItem>

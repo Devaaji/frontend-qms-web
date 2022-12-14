@@ -5,14 +5,15 @@ import {
   Text,
   useColorModeValue,
   VStack,
-} from "@chakra-ui/react";
-import Head from "next/head";
-import React, { useEffect, useState } from "react";
-import DashboardLayout from "../components/Dashboard/DashboardLayout";
-import DashboardPagination from "../components/Dashboard/DashboardPagination";
-import useRemoteData01Reporting from "../components/hooks/remote/useRemoteData01Reporting";
-import TableCardReport01 from "../components/Table/TableCardReport01";
-import DataNotFoundReporting from "../utils/DataNotFound/DataNotFoundReporting";
+} from '@chakra-ui/react';
+import Head from 'next/head';
+import React, { useEffect, useState } from 'react';
+import DashboardLayout from '../components/Dashboard/DashboardLayout';
+import DashboardPagination from '../components/Dashboard/DashboardPagination';
+import useRemoteData01Reporting from '../components/hooks/remote/useRemoteData01Reporting';
+import TableCardReport01 from '../components/Table/TableCardReport01';
+import DataNotFoundReporting from '../utils/DataNotFound/DataNotFoundReporting';
+import { getServerSidePropsWithAuth } from '../utils/getServerSidePropsWithAuth';
 
 const Report01 = () => {
   const [dataLimit, setDataLimit] = useState(10);
@@ -36,11 +37,11 @@ const Report01 = () => {
       ? dataReports01?.data?.filter((_, index) => {
           return index % 2 !== 1;
         })
-      : "";
+      : '';
 
   return (
     <React.Fragment>
-      {dataReports01?.messages === "Data Not Found!" ? (
+      {dataReports01?.messages === 'Data Not Found!' ? (
         <DataNotFoundReporting />
       ) : (
         <VStack h="85vh" overflow="auto" align="stretch" p="6" spacing="3">
@@ -48,8 +49,8 @@ const Report01 = () => {
             <title>Report Hasil Pengukuran 01 | QMS</title>
           </Head>
           <Box
-            py={{ base: "4", md: "4", lg: "3" }}
-            bg={useColorModeValue("white", "gray.800")}
+            py={{ base: '4', md: '4', lg: '3' }}
+            bg={useColorModeValue('white', 'gray.800')}
             position="sticky"
             zIndex={10}
             top="-6"
@@ -144,7 +145,7 @@ const Report01 = () => {
               <TableCardReport01 item={item} key={index} odds={oddDataMapper} />
             ))}
           <Flex
-            flexDir={{ base: "column", md: "row", xl: "row" }}
+            flexDir={{ base: 'column', md: 'row', xl: 'row' }}
             justifyContent="space-between"
             borderTopWidth="1px"
             alignItems="center"
@@ -164,5 +165,8 @@ const Report01 = () => {
 };
 
 Report01.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+
+export const getServerSideProps = async (context) =>
+  getServerSidePropsWithAuth(context);
 
 export default Report01;

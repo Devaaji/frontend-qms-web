@@ -14,12 +14,41 @@ import {
 import NextLink from 'next/link';
 import { FiLogOut, FiUsers } from 'react-icons/fi';
 import { useRouter } from 'next/router';
+import useAxios from '../../hooks/useAxios';
+import useAuthUserStore from '../../../store/useAuthUserStore';
+import axios from 'axios';
 
 const DashboardUserNavbar = () => {
   const router = useRouter();
 
-  const handleLogout = () => {
-    router.push('/login');
+  const removeCookiesUser = useAuthUserStore((state) => state.setLogout);
+
+  // const [, executeSetLogout] = useAxios(
+  //   {
+  //     url: '/auth/logout',
+  //     method: 'GET',
+  //     headers: {
+  //       Authorization: `Bearer ${useAuthUserStore.getState().refreshToken}`,
+  //     },
+  //   },
+  //   { manual: true }
+  // );
+
+  const handleLogout = async () => {
+    try {
+      await axios
+        .get('http://localhost:3030/auth/logout', {
+          headers: {
+            Authorization: `Bearer ${useAuthUserStore.getState().refreshToken}`,
+          },
+        })
+        .then(() => {
+          removeCookiesUser();
+          router.push('/login');
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

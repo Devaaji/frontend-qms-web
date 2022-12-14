@@ -17,6 +17,7 @@ import TableCardMonitoring01 from '../components/Table/TableCardMonitoring01';
 import HeaderMonitoring01 from '../components/Header/HeaderMonitoring01';
 import DataNotFoundMonitoring from '../utils/DataNotFound/DataNotFoundMonitoring';
 import useAxios from '../components/hooks/useAxios';
+import { getServerSidePropsWithAuth } from '../utils/getServerSidePropsWithAuth';
 
 const Monitoring01 = () => {
   const toast = useToast();
@@ -220,5 +221,8 @@ const Monitoring01 = () => {
 };
 
 Monitoring01.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+
+export const getServerSideProps = async (context) =>
+  getServerSidePropsWithAuth(context);
 
 export default Monitoring01;

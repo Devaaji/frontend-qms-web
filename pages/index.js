@@ -1,8 +1,9 @@
 import React from 'react';
-import { Box, SimpleGrid, Text, VStack } from '@chakra-ui/react';
+import { SimpleGrid, VStack } from '@chakra-ui/react';
 import DashboardLayout from '../components/Dashboard/DashboardLayout';
 import DashboardTableActivity from '../components/Dashboard/DashboardTableActivity';
 import Head from 'next/head';
+import { getServerSidePropsWithAuth } from '../utils/getServerSidePropsWithAuth';
 
 const HomePage = () => {
   return (
@@ -18,5 +19,8 @@ const HomePage = () => {
 };
 
 HomePage.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+
+export const getServerSideProps = async (context) =>
+  getServerSidePropsWithAuth(context);
 
 export default HomePage;
